@@ -1,0 +1,168 @@
+you need 100 coins to get website
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lagu Auto Play</title>
+    <style>
+        /* Gaya untuk posisi pemutar audio di bagian bawah kiri */
+        .audio-player {
+            position: fixed;
+            left: 0;
+            margin: 10px;
+        }
+        /* Gaya untuk teks di atas pemutar audio */
+        .text-message {
+            position: fixed;
+            bottom: 100px; /* Jarak dari bagian bawah */
+            left: 0;
+            margin: 10px;
+            text-align: left; /* Rata kiri */
+            color: #000; /* Warna teks */
+            background-color: rgba(255, 255, 255, 0.8); /* Latar belakang transparan */
+            padding: 5px; /* Padding untuk teks */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Teks yang ditambahkan di atas pemutar audio -->
+    <div class="text-message">
+        <h2>Activate the website song to make it fun</h2>
+    </div>
+
+    <!-- Pemutar audio pertama dengan auto play -->
+    <div class="audio-player" style="bottom: 60px;">
+        <audio controls autoplay loop>
+            <source src="lagu website.mp3" type="audio/mpeg">
+            Browser Anda tidak mendukung elemen audio.
+        </audio>
+    </div>
+
+    <!-- Pemutar audio kedua dengan auto play -->
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teks Coin</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 0; /* Menghapus margin default dari body */
+            padding-top: 20px; /* Menambahkan padding atas untuk spasi */
+        }
+        .coin-value {
+            font-size: 40px;
+            font-weight: normal;
+            color: #333;
+        }
+        .coin-title {
+            font-size: 80px;
+            font-weight: bold;
+            color: gold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+        .coin-title:hover {
+            transform: scale(1.1);
+        }
+        .get-website-button,
+        .get-coin-button {
+            margin-top: 30px;
+            padding: 12px 24px; /* Penambahan padding untuk tombol */
+            font-size: 20px;
+            color: white;
+            background-color: #4CAF50; /* Warna hijau */
+            border: none;
+            border-radius: 30px; /* Membuat tombol bulat */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+        }
+        .get-website-button:disabled,
+        .get-coin-button:disabled {
+            background-color: #ccc; /* Warna tombol yang dinonaktifkan */
+            cursor: not-allowed; /* Menunjukkan bahwa tombol tidak bisa diklik */
+        }
+        .get-website-button:hover:not(:disabled),
+        .get-coin-button:hover:not(:disabled) {
+            background-color: #45a049; /* Warna tombol saat hover */
+            transform: scale(1.05); /* Efek zoom saat hover */
+        }
+        .timer {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="coin-value" id="coinValue">Coin: 1</div>
+    <div class="coin-title">Coin</div>
+    <button class="get-coin-button" id="getCoinBtn" onclick="getCoin()">Get Coin</button>
+    <div class="timer" id="timerDisplay">Cooldown: 0</div>
+    <button class="get-website-button" id="getWebsiteBtn" disabled onclick="getWebsite()">Get Website</button>
+
+    <script>
+        let coinCount = 1; // Jumlah coin saat ini
+        let cooldownTime = 10; // Cooldown dalam detik
+        let cooldownActive = false; // Status cooldown
+
+        // Fungsi untuk mengupdate jumlah coin
+        function updateCoinCount() {
+            const coinValueDiv = document.getElementById('coinValue');
+            coinValueDiv.innerText = `Coin: ${coinCount}`;
+            // Enable atau disable tombol berdasarkan jumlah coin
+            const getWebsiteBtn = document.getElementById('getWebsiteBtn');
+            getWebsiteBtn.disabled = coinCount < 100;
+        }
+
+        // Fungsi untuk mengarahkan ke link lain
+        function getWebsite() {
+            if (coinCount >= 100) {
+                window.location.href = 'https://ayeycaptains.github.io/ids/'; // Ganti dengan link yang diinginkan
+            }
+        }
+
+        // Fungsi untuk menambah coin
+        function getCoin() {
+            if (!cooldownActive) {
+                coinCount += 5; // Tambahkan 2 coin
+                updateCoinCount();
+                startCooldown(); // Mulai cooldown
+            }
+        }
+
+        // Fungsi untuk memulai cooldown
+        function startCooldown() {
+            cooldownActive = true;
+            let remainingTime = cooldownTime; // Waktu tersisa
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.innerText = `Cooldown: ${remainingTime}`;
+
+            const cooldownInterval = setInterval(() => {
+                remainingTime--;
+                timerDisplay.innerText = `Cooldown: ${remainingTime}`;
+                if (remainingTime <= 0) {
+                    clearInterval(cooldownInterval);
+                    cooldownActive = false; // Reset status cooldown
+                    timerDisplay.innerText = `Cooldown: 0`; // Reset tampilan timer
+                }
+            }, 1000); // Update setiap detik
+        }
+    </script>
+</body>
+</html>
